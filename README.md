@@ -8,3 +8,5 @@ Carbon Credit Trading Platform
 
 abi: application binary interface: standard way for contract to interact with ethereum network.
 Present in artifacts/contracts/Transactions.sol/Transactions.json
+
+FOR RUNNING: in client folder: npm run dev
