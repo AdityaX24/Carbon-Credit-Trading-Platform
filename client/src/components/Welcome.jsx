@@ -41,7 +41,7 @@ const Welcome = () => {
                         Send Crypto <br /> Accross the World
                     </h1>
                     <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">
-                        Explore the carbon credit World. Buy and sell CCcrypto-currencies easily here.
+                        Explore the carbon credit World. Buy and sell Carbon credit currencies easily here.
                     </p>
                     {!currentAccount && (<button
                     type="button"
