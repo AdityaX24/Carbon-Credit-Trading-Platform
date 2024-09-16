@@ -1,11 +1,9 @@
-import {useState } from 'react';
+import React, { useState } from 'react';
 import { HiMenuAlt4 } from 'react-icons/hi';
 import { AiOutlineClose } from 'react-icons/ai';
 
-import logo from '../../images/logo.png';
-
-const NavbarItem =({title, classProps}) => {
-    return  (
+const NavbarItem = ({ title, classProps }) => {
+    return (
         <li className={`mx-4 cursor-pointer ${classProps}`}>
             {title}
         </li>
@@ -13,14 +11,36 @@ const NavbarItem =({title, classProps}) => {
 }
 
 const Navbar = () => {
-    const [toggleMenu, setToggleMenu]=useState(false);
+    const [toggleMenu, setToggleMenu] = useState(false);
+
+    const logoStyle = {
+        fontFamily: "'Montserrat', sans-serif",
+        fontSize: '1.2rem',
+        fontWeight: 'bold',
+        background: 'linear-gradient(45deg, #4CAF50, #2196F3)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        padding: '0.3rem 0.5rem',
+        border: '2px solid #4CAF50',
+        borderRadius: '6px',
+        textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+        letterSpacing: '0.5px',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        display: 'inline-block',
+        whiteSpace: 'nowrap',
+        width: 'fit-content',
+    };
+
     return ( 
         <nav className="w-full flex md:justify-center justify-between items-center p-4">
-            <div className="md:flex=[0.5] flex-initial justify-center items-center">
-                <img src={logo} alt="logo" className="w-32 cursor-pointer" />
+            <div className="md:flex-[0.5] flex-initial justify-center items-center">
+                <div style={logoStyle} className="hover:scale-105">
+                    Carbon Credit <span style={{ color: 'white', textShadow: 'none' }}>X-Change</span>
+                </div>
             </div>
             <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-                {["Market", "Exchange", "Tutorials", "Wallets"].map((item, index) => (
+                {[].map((item, index) => (
                     <NavbarItem key={item+index} title={item}/>
                 ))}
                 <li className="bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]">
@@ -48,4 +68,4 @@ const Navbar = () => {
     );
 }
 
-export default Navbar
+export default Navbar;

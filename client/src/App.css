@@ -1,3 +1,13 @@
+/* Green gradient background */
+body {
+  background: linear-gradient(135deg, #5A8F5A, #8FBC8F);
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0; /* Reset default margin */
+  font-family: Arial, sans-serif; /* Add a default font */
+}
+
+/* Root container styles */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,19 +15,23 @@
   text-align: center;
 }
 
+/* Logo styles */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* Logo spin animation */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -33,10 +47,54 @@
   }
 }
 
+/* Card styles */
 .card {
   padding: 2em;
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-bottom: 1em; /* Space between cards */
 }
 
+/* Documentation link styles */
 .read-the-docs {
-  color: #888;
+  color: #ffffff; /* White text for better contrast on green background */
+  text-decoration: underline;
+  margin-top: 2em;
+}
+
+/* Additional styles for better readability on the green background */
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+}
+
+p {
+  color: #f0f0f0;
+  line-height: 1.6;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .logo {
+    height: 4em;
+    padding: 1em;
+  }
+
+  .card {
+    padding: 1.5em;
+  }
 }
