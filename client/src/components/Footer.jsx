@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
@@ -25,7 +25,7 @@ const AnimatedShape = styled(motion.div)`
   z-index: 1;
 `;
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled(motion.div)`
   position: relative;
   z-index: 2;
   width: 100%;
@@ -67,11 +67,9 @@ const StyledInput = styled.input`
   width: 250px;
   font-size: 16px;
   transition: all 0.3s ease;
-
   &::placeholder {
     color: rgba(255, 255, 255, 0.7);
   }
-
   &:focus {
     outline: none;
     background: rgba(255, 255, 255, 0.2);
@@ -80,14 +78,14 @@ const StyledInput = styled.input`
   }
 `;
 
-const CenterSection = styled.div`
-  font-size: 10vw;
+const CenterSection = styled(motion.div)`
+  font-size: 7vw;
   text-align: center;
   margin-top: auto;
   margin-bottom: auto;
 `;
 
-const BottomSection = styled.div`
+const BottomSection = styled(motion.div)`
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -95,27 +93,43 @@ const BottomSection = styled.div`
   padding-top: 20px;
 `;
 
-const LogoStyle = {
-  fontFamily: "'Montserrat', sans-serif",
-  fontSize: '2rem',
-  fontWeight: 'bold',
-  background: 'linear-gradient(45deg, #4CAF50, #2196F3)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  padding: '0.5rem 1rem',
-  border: '3px solid #4CAF50',
-  borderRadius: '8px',
-  textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
-  letterSpacing: '1px',
-  display: 'inline-block',
-  whiteSpace: 'nowrap',
-  width: 'fit-content',
-  marginBottom: '1rem',
-};
+const AnimatedText = styled(motion.span)`
+  display: inline-block;
+`;
+
+const AnimatedInput = styled(motion.div)`
+  width: 250px;
+`;
 
 export default function Footer() {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100
+      }
+    }
+  };
+
   return (
-    <FooterContainer>
+    <FooterContainer ref={ref}>
       <AnimatedShape
         initial={{ top: '-68%', left: '-7%', rotate: 60, borderRadius: '0%' }}
         animate={{ 
@@ -146,25 +160,39 @@ export default function Footer() {
         }}
         style={{ right: '6%' }}
       />
-      <ContentWrapper>
+      <ContentWrapper
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
         <TopSection>
           <FooterLeft>
-            {/* g */}
+            {/* Add content here if needed */}
           </FooterLeft>
           <FooterRight>
-            <BoldParagraph>
-              Get industry insights and creative inspiration straight to your inbox.
-            </BoldParagraph>
-            <StyledInput type="email" placeholder="Email Address →" />
+            <motion.div variants={itemVariants}>
+              <BoldParagraph>
+                <AnimatedText>
+                  Get industry insights and creative inspiration straight to your inbox.
+                </AnimatedText>
+              </BoldParagraph>
+            </motion.div>
+            <AnimatedInput
+              variants={itemVariants}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <StyledInput type="email" placeholder="Email Address →" />
+            </AnimatedInput>
           </FooterRight>
         </TopSection>
-        <CenterSection>
+        <CenterSection variants={itemVariants}>
           Carbon Credit X-Change
         </CenterSection>
-        <BottomSection>
-          <span>@Capstone2025</span>
-          <span>poddar.aditya24@gmail.com</span>
-          <span>Not All rights reserved</span>
+        <BottomSection variants={containerVariants}>
+          <motion.span variants={itemVariants}>@Capstone2025</motion.span>
+          <motion.span variants={itemVariants}>poddar.aditya24@gmail.com</motion.span>
+          <motion.span variants={itemVariants}>Not All rights reserved</motion.span>
         </BottomSection>
       </ContentWrapper>
     </FooterContainer>
