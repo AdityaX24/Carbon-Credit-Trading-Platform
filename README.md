@@ -10,3 +10,5 @@ abi: application binary interface: standard way for contract to interact with et
 Present in artifacts/contracts/Transactions.sol/Transactions.json
 
 FOR RUNNING: in client folder: npm run dev
+
+On AIO branch
