@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.9",
+    "framer-motion": "^11.5.4",
+    "styled-components": "^6.1.13"
+  }
+}
