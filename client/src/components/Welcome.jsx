@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SiEthereum } from 'react-icons/si';
 import { BsInfoCircle } from 'react-icons/bs';
 
@@ -21,6 +21,7 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 
 const Welcome = () => {
     const { connectWallet, currentAccount, formData, sendTransaction, handleChange, isLoading } = useContext(TransactionContext);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const handleSubmit = (e) => {
         const { addressTo, amount, keyword, message } = formData;
@@ -30,17 +31,17 @@ const Welcome = () => {
     }
 
     useEffect(() => {
-        // You can add any additional setup or animations here if needed
+        setIsLoaded(true);
     }, []);
 
     return (
         <div className="flex w-full justify-center items-center">
             <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
-                <div className="flex flex-1 justify-start flex-col mf:mr-10">
-                    <h1 className="text-3xl sm:text-5xl text-white text-gradient py-1 transition-all duration-700 hover:scale-110 hover:rotate-2 hover:text-purple-400 cursor-default animate-fade-in-down">
+                <div className={`flex flex-1 justify-start flex-col mf:mr-10 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
+                    <h1 className="text-3xl sm:text-5xl text-white text-gradient py-1 transition-all duration-700 hover:scale-110 hover:rotate-2 hover:text-purple-400 cursor-default">
                         Send Carbon Credits <br /> Across the World
                     </h1>
-                    <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base transition-all duration-500 hover:text-yellow-300 hover:translate-x-4 animate-fade-in">
+                    <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base transition-all duration-500 hover:text-yellow-300 hover:translate-x-4">
                         Explore the carbon credit World. Buy and sell Carbon credit currencies easily here.
                     </p>
                     {!currentAccount && (
@@ -53,7 +54,7 @@ const Welcome = () => {
                         </button>
                     )}
 
-                    <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10 animate-fade-in-up">
+                    <div className={`grid sm:grid-cols-3 grid-cols-2 w-full mt-10 ${isLoaded ? 'animate-fade-in-up' : 'opacity-0'}`}>
                         <div className={`rounded-tl-2xl ${commonStyles}`}>Reliability</div>
                         <div className={commonStyles}>Security</div>
                         <div className={`rounded-tr-2xl ${commonStyles}`}>Security</div>
@@ -63,14 +64,14 @@ const Welcome = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10">
-                    <div className="p-3 justify-end items-start flex-col rounded-xl h-40 sm:w-72 w-full my-5 eth-card white-glassmorphism transition-all duration-500 hover:shadow-2xl hover:scale-110 hover:rotate-6 animate-float">
+                <div className={`flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10 ${isLoaded ? 'animate-fade-in-left' : 'opacity-0'}`}>
+                    <div className="p-3 justify-end items-start flex-col rounded-xl h-40 sm:w-72 w-full my-5 eth-card white-glassmorphism transition-all duration-500 hover:shadow-2xl hover:scale-110 hover:rotate-6">
                         <div className="flex justify-between flex-col w-full h-full">
                             <div className="flex justify-between items-start">
-                                <div className="w-10 h-10 rounded-full border-2 border-white flex justify-center items-center transition-all duration-500 hover:rotate-[360deg] hover:scale-125 hover:border-purple-500 animate-spin-slow">
+                                <div className="w-10 h-10 rounded-full border-2 border-white flex justify-center items-center transition-all duration-500 hover:rotate-[360deg] hover:scale-125 hover:border-purple-500">
                                     <SiEthereum fontSize={21} color="#fff" className="transition-all duration-500 hover:text-purple-500" />
                                 </div>
-                                <BsInfoCircle fontSize={17} color="#fff" className="transition-all duration-300 hover:scale-150 hover:text-yellow-300 animate-bounce" />
+                                <BsInfoCircle fontSize={17} color="#fff" className="transition-all duration-300 hover:scale-150 hover:text-yellow-300" />
                             </div>
                             <div>
                                 <p className="text-white font-light text-sm transition-all duration-300 hover:text-purple-300">
@@ -83,13 +84,13 @@ const Welcome = () => {
                         </div>
                     </div>
 
-                    <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:bg-purple-900/30 animate-fade-in">
+                    <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:bg-purple-900/30">
                         <Input placeholder="Address To" name="addressTo" type="text" handleChange={handleChange} />
                         <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={handleChange} />
                         <Input placeholder="Keyword (GIF)" name="keyword" type="text" handleChange={handleChange} />
                         <Input placeholder="Enter Message" name="message" type="text" handleChange={handleChange} />
 
-                        <div className="h-[1px] w-full bg-gray-400 my-2 transition-all duration-300 hover:bg-purple-500 hover:h-[2px] animate-pulse" />
+                        <div className="h-[1px] w-full bg-gray-400 my-2 transition-all duration-300 hover:bg-purple-500 hover:h-[2px]" />
 
                         {isLoading ? (
                             <Loader />
@@ -97,7 +98,7 @@ const Welcome = () => {
                             <button
                                 type="button"
                                 onClick={handleSubmit}
-                                className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] rounded-full cursor-pointer transition-all duration-300 hover:bg-purple-600 hover:border-yellow-300 hover:text-yellow-300 transform hover:scale-110 hover:rotate-3 hover:shadow-lg active:scale-95 animate-pulse"
+                                className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] rounded-full cursor-pointer transition-all duration-300 hover:bg-purple-600 hover:border-yellow-300 hover:text-yellow-300 transform hover:scale-110 hover:rotate-3 hover:shadow-lg active:scale-95"
                             >
                                 Send Now
                             </button>
