@@ -51,7 +51,6 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-/* white glassmorphism */
 .white-glassmorphism {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
@@ -77,6 +76,30 @@ body {
   background-image: radial-gradient(at 4% 36%, hsla(0,0%,100%,1) 0, transparent 53%), radial-gradient(at 100% 60%, rgb(0, 0, 0) 0, transparent 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.complex-gradient-background {
+  background: 
+    radial-gradient(ellipse at top left, rgba(46, 230, 180, 0.7) 0%, transparent 50%),
+    radial-gradient(ellipse at top right, rgba(41, 171, 226, 0.7) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(46, 230, 180, 0.7) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(41, 171, 226, 0.7) 0%, transparent 50%),
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 25%, rgba(0, 0, 0, 0.5) 50%, transparent 100%);
+  background-color: #1a1a1a;
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @tailwind base;

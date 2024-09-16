@@ -1,6 +1,6 @@
 /* Green gradient background */
 body {
-  background: linear-gradient(135deg, #5A8F5A, #8FBC8F);
+  background: linear-gradient(to top, #4CAF50, #2196F3);
   background-attachment: fixed;
   min-height: 100vh;
   margin: 0; /* Reset default margin */
