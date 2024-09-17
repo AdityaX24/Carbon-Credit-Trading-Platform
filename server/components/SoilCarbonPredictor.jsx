@@ -121,6 +121,15 @@ const ResultBox = styled(motion.div)(({ theme }) => ({
   backdropFilter: 'blur(10px)',
 }));
 
+// const ParticleBackground = styled(Box)({
+//   position: 'fixed',
+//   top: 0,
+//   left: 0,
+//   width: '100%',
+//   height: '100%',
+//   zIndex: -1,
+// });
+
 const ParticleBackground = styled(Box)({
   position: 'fixed',
   top: 0,
@@ -167,54 +176,157 @@ const SoilCarbonPredictor = () => {
   const [ result, setResult] = useState('');
 
 
+  // useEffect(() => {
+  //   let scene, camera, renderer, particles, stats;
+  //   let mouseX = 0, mouseY = 0;
+  //   let windowHalfX = window.innerWidth / 2;
+  //   let windowHalfY = window.innerHeight / 2;
+
+  //   const init = () => {
+  //     scene = new THREE.Scene();
+  //     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
+  //     camera.position.z = 1000;
+
+  //     const geometry = new THREE.BufferGeometry();
+  //     const vertices = [];
+  //     const size = 2000;
+
+  //     for (let i = 0; i < 8000; i++) {
+  //       const x = Math.random() * size - size / 2;
+  //       const y = Math.random() * size - size / 2;
+  //       const z = Math.random() * size - size / 2;
+  //       vertices.push(x, y, z);
+  //     }
+
+  //     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+  //     const material = new THREE.PointsMaterial({
+  //       size: 2,
+  //       color: 0xffffff,
+  //       transparent: true,
+  //       opacity: 0.7,
+  //       sizeAttenuation: true,
+  //     });
+
+  //     particles = new THREE.Points(geometry, material);
+  //     scene.add(particles);
+
+  //     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  //     renderer.setPixelRatio(window.devicePixelRatio);
+  //     renderer.setSize(window.innerWidth, window.innerHeight);
+  //     renderer.setClearColor(0x000000, 0);
+  //     particleRef.current.appendChild(renderer.domElement);
+
+  //     stats = new Stats();
+  //     particleRef.current.appendChild(stats.dom);
+
+  //     document.addEventListener('mousemove', onDocumentMouseMove);
+  //     window.addEventListener('resize', onWindowResize);
+  //   };
+
+  //   const onWindowResize = () => {
+  //     windowHalfX = window.innerWidth / 2;
+  //     windowHalfY = window.innerHeight / 2;
+  //     camera.aspect = window.innerWidth / window.innerHeight;
+  //     camera.updateProjectionMatrix();
+  //     renderer.setSize(window.innerWidth, window.innerHeight);
+  //   };
+
+  //   const onDocumentMouseMove = (event) => {
+  //     mouseX = (event.clientX - windowHalfX) / 3;
+  //     mouseY = (event.clientY - windowHalfY) / 3;
+  //   };
+
+  //   const animate = () => {
+  //     requestAnimationFrame(animate);
+  //     render();
+  //     stats.update();
+  //   };
+
+  //   const render = () => {
+  //     camera.position.x += (mouseX - camera.position.x) * 0.05;
+  //     camera.position.y += (-mouseY - camera.position.y) * 0.05;
+  //     camera.lookAt(scene.position);
+
+  //     const time = Date.now() * 0.00005;
+  //     particles.rotation.y = time * 0.5;
+  //     particles.position.y = Math.sin(time * 2) * 10;
+
+  //     renderer.render(scene, camera);
+  //   };
+
+  //   init();
+  //   animate();
+
+  //   return () => {
+  //     if (particleRef.current) {
+  //       particleRef.current.removeChild(renderer.domElement);
+  //       particleRef.current.removeChild(stats.dom);
+  //     }
+  //     window.removeEventListener('resize', onWindowResize);
+  //     document.removeEventListener('mousemove', onDocumentMouseMove);
+  //   };
+  // }, []);
+
   useEffect(() => {
     let scene, camera, renderer, particles, stats;
     let mouseX = 0, mouseY = 0;
     let windowHalfX = window.innerWidth / 2;
     let windowHalfY = window.innerHeight / 2;
-
+  
     const init = () => {
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
       camera.position.z = 1000;
-
+  
       const geometry = new THREE.BufferGeometry();
       const vertices = [];
       const size = 2000;
-
+  
       for (let i = 0; i < 8000; i++) {
         const x = Math.random() * size - size / 2;
         const y = Math.random() * size - size / 2;
         const z = Math.random() * size - size / 2;
         vertices.push(x, y, z);
       }
-
+  
       geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-
+  
+      // Updated material with gradient-like environmental colors
       const material = new THREE.PointsMaterial({
         size: 2,
-        color: 0xffffff,
+        vertexColors: true,
         transparent: true,
-        opacity: 0.7,
+        opacity: 0.8,
         sizeAttenuation: true,
       });
-
+  
+      // Adding environmental colors (light green, light blue, light yellow)
+      const colors = [];
+      for (let i = 0; i < vertices.length; i += 3) {
+        colors.push(0.6, 0.8, 0.4); // light green
+        colors.push(0.5, 0.7, 1);   // light blue
+        colors.push(1, 0.9, 0.4);   // light yellow
+      }
+  
+      geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+  
       particles = new THREE.Points(geometry, material);
       scene.add(particles);
-
+  
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setClearColor(0x000000, 0);
       particleRef.current.appendChild(renderer.domElement);
-
+  
       stats = new Stats();
       particleRef.current.appendChild(stats.dom);
-
+  
       document.addEventListener('mousemove', onDocumentMouseMove);
       window.addEventListener('resize', onWindowResize);
     };
-
+  
     const onWindowResize = () => {
       windowHalfX = window.innerWidth / 2;
       windowHalfY = window.innerHeight / 2;
@@ -222,33 +334,33 @@ const SoilCarbonPredictor = () => {
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
-
+  
     const onDocumentMouseMove = (event) => {
       mouseX = (event.clientX - windowHalfX) / 3;
       mouseY = (event.clientY - windowHalfY) / 3;
     };
-
+  
     const animate = () => {
       requestAnimationFrame(animate);
       render();
       stats.update();
     };
-
+  
     const render = () => {
       camera.position.x += (mouseX - camera.position.x) * 0.05;
       camera.position.y += (-mouseY - camera.position.y) * 0.05;
       camera.lookAt(scene.position);
-
+  
       const time = Date.now() * 0.00005;
       particles.rotation.y = time * 0.5;
       particles.position.y = Math.sin(time * 2) * 10;
-
+  
       renderer.render(scene, camera);
     };
-
+  
     init();
     animate();
-
+  
     return () => {
       if (particleRef.current) {
         particleRef.current.removeChild(renderer.domElement);

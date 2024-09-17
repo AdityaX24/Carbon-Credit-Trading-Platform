@@ -259,16 +259,32 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from '../components/Login';
 import SoilCarbonPredictor from '../components/SoilCarbonPredictor';
+import CssBaseline from '@mui/material/CssBaseline';
+
+// const App = () => {
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route path="/login" element={<Login />} />
+//         <Route path="/soil-carbon-predictor" element={<SoilCarbonPredictor />} />
+//         <Route path="/" element={<Navigate replace to="/login" />} />
+//       </Routes>
+//     </Router>
+//   );
+// };
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/soil-carbon-predictor" element={<SoilCarbonPredictor />} />
-        <Route path="/" element={<Navigate replace to="/login" />} />
-      </Routes>
-    </Router>
+    <>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/soil-carbon-predictor" element={<SoilCarbonPredictor />} />
+          <Route path="/" element={<Navigate replace to="/login" />} />
+        </Routes>
+      </Router>
+    </>
   );
 };
 
