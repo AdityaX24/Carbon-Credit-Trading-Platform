@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const FooterContainer = styled.footer`
   width: 100%;
@@ -85,6 +86,15 @@ const CenterSection = styled(motion.div)`
   margin-bottom: auto;
 `;
 
+const ClickableCenterSection = styled(CenterSection)`
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #4CAF50;
+  }
+`;
+
 const BottomSection = styled(motion.div)`
   display: flex;
   justify-content: space-between;
@@ -104,6 +114,11 @@ const AnimatedInput = styled(motion.div)`
 export default function Footer() {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/main');
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -186,9 +201,14 @@ export default function Footer() {
             </AnimatedInput>
           </FooterRight>
         </TopSection>
-        <CenterSection variants={itemVariants}>
+        <ClickableCenterSection 
+          variants={itemVariants}
+          onClick={handleClick}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           Carbon Credit X-Change
-        </CenterSection>
+        </ClickableCenterSection>
         <BottomSection variants={containerVariants}>
           <motion.span variants={itemVariants}>@Capstone2025</motion.span>
           <motion.span variants={itemVariants}>poddar.aditya24@gmail.com</motion.span>
